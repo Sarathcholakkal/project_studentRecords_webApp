@@ -32,7 +32,7 @@ class AppDetails extends StatelessWidget {
         } else {
           // For desktop
           titleSize = 80.0;
-          descriptionSize = 21.0;
+          descriptionSize = 18.0;
           spaceBox = SizedBox(
             height: 10,
           );

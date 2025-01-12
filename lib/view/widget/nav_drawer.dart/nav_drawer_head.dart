@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:student_records/theme/app_color.dart';
 
 class NavDrawerHeader extends StatelessWidget {
   const NavDrawerHeader({super.key});
