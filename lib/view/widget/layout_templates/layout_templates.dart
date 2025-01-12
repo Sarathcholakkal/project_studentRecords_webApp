@@ -6,6 +6,7 @@ import 'package:student_records/services/route/route_function.dart';
 import 'package:student_records/services/route/route_name.dart';
 import 'package:student_records/view/widget/centerd_view/centerd_view.dart';
 import 'package:student_records/view/widget/nav_bar/nav_bar.dart';
+import 'package:student_records/view/widget/nav_drawer.dart/nav_drawer.dart';
 
 class LayoutTemplates extends StatefulWidget {
   const LayoutTemplates({super.key});
@@ -19,9 +20,9 @@ class _LayoutTemplatesState extends State<LayoutTemplates> {
   Widget build(BuildContext context) {
     return ResponsiveBuilder(builder: (context, sizingInformation) {
       return Scaffold(
-        // drawer: sizingInformation.deviceScreenType == DeviceScreenType.mobile
-        //     ? NavDrawer()
-        //     : null,
+        drawer: sizingInformation.deviceScreenType == DeviceScreenType.mobile
+            ? NavDrawer()
+            : null,
         backgroundColor: Colors.white,
         body: CenteredView(
           child: Column(
