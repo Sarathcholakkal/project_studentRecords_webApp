@@ -3,6 +3,7 @@ import 'package:student_records/services/locator/locator.dart';
 import 'package:student_records/view/splash/splash_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   runApp(const MyApp());
 }
