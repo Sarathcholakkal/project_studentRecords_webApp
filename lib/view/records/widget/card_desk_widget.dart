@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:student_records/database/model/stundent_model.dart';
 import 'package:student_records/view/records/widget/info_row_widget.dart';
 
 class CardDeskWidget extends StatelessWidget {
-  const CardDeskWidget({
-    super.key,
-  });
+  final StudentModel student;
+
+  const CardDeskWidget({super.key, required this.student});
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +22,19 @@ class CardDeskWidget extends StatelessWidget {
             height: 30,
           ),
           Text(
-            "Jeslin James",
+            student.name,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
           SizedBox(
             height: 20,
           ),
-          InfoRowWidget(icon: Icons.phone, infoType: "Tel", info: "9020848454"),
+          InfoRowWidget(
+              icon: Icons.phone, infoType: "Tel", info: student.number),
           SizedBox(
             height: 20,
           ),
           InfoRowWidget(
-              icon: Icons.email,
-              infoType: "Email",
-              info: "sarathcholakkal@gmail.com"),
+              icon: Icons.email, infoType: "Email", info: student.email),
           SizedBox(
             height: 20,
           ),
@@ -47,7 +47,7 @@ class CardDeskWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              "Flutter",
+              student.domain,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                   fontWeight: FontWeight.bold,

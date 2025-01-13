@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
+import 'package:student_records/database/db_functions/db_functions.dart';
+import 'package:student_records/database/model/stundent_model.dart';
 
 class AddRecordAll extends StatefulWidget {
   const AddRecordAll({
@@ -43,24 +45,24 @@ class _AddRecordAllState extends State<AddRecordAll> {
     final domain = domainController.text.trim();
     final number = numberController.text.trim();
     if (result != null) {
-      // final student = StudentModel(
-      //     name: name,
-      //     email: emil,
-      //     domain: domain,
-      //     number: number,
-      //     image: _imagePath!);
-      // await addStudent(student);
+      final student = StudentModel(
+        name: name,
+        email: emil,
+        domain: domain,
+        number: number,
+        image: Uint8List.fromList(_imageFile!.bytes!),
+      );
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        const SnackBar(
+          content: Text('Student data updated successfully!'),
+          duration: Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      await addStudent(student);
+      // Show success Snackbar
 
-      // Navigator.of(context).push(
-      //   MaterialPageRoute(
-      //     builder: (ctx) {
-      //       return const RecordScreen();
-      //     },
-      //   ),
-      // );
       clearField();
-
-      // getAllStudent();
     } else {
       showDialog(
           context: ctx,
