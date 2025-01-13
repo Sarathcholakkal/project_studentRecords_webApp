@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:student_records/view/records/desk_test.dart';
-import 'package:student_records/view/records/mobile_test.dart';
+import 'package:student_records/view/records/record_view_desk.dart';
+import 'package:student_records/view/records/record_view_mobile.dart';
 
 class RecordView extends StatelessWidget {
   const RecordView({super.key});
@@ -9,9 +9,9 @@ class RecordView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
-      mobile: (BuildContext context) => const MobileTest(),
-      tablet: (BuildContext context) => const MobileTest(),
-      desktop: (BuildContext context) => const DeskTest(),
+      mobile: (BuildContext context) => const RecordViewMobile(),
+      tablet: (BuildContext context) => const RecordViewMobile(),
+      desktop: (BuildContext context) => const RecordViewDesk(),
     );
   }
 }
