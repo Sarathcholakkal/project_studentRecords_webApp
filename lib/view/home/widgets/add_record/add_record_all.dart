@@ -89,9 +89,7 @@ class _AddRecordAllState extends State<AddRecordAll> {
     emailController.clear();
     domainController.clear();
     numberController.clear();
-    setState(() {
-      // _imagePath = null;
-    });
+    webImage.value = null;
   }
 
   @override
