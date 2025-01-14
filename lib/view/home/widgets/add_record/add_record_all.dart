@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:student_records/database/db_functions/db_functions.dart';
 import 'package:student_records/database/model/stundent_model.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddRecordAll extends StatefulWidget {
   const AddRecordAll({
@@ -14,6 +15,22 @@ class AddRecordAll extends StatefulWidget {
 }
 
 class _AddRecordAllState extends State<AddRecordAll> {
+  //==============image handling------------------------
+  ValueNotifier<Uint8List?> webImage = ValueNotifier(null);
+
+  ImagePicker imagePicker = ImagePicker();
+
+  Future<void> imagePickerFromGallery() async {
+    final imgPicked = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (imgPicked != null) {
+      final Uint8List bytes = await imgPicked.readAsBytes();
+      setState(() {
+        webImage.value = bytes;
+      });
+    }
+  }
+
+  // controllers-----------------------------------------
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final domainController = TextEditingController();
@@ -25,32 +42,19 @@ class _AddRecordAllState extends State<AddRecordAll> {
   final RegExp textValid = RegExp(r"^\s*[a-zA-Z,\s]+\s*$");
 
   final GlobalKey<FormState> _signInKey = GlobalKey();
-  // Function to pick an image
-  PlatformFile? _imageFile;
-  FilePickerResult? result;
-  Future<void> pickImage() async {
-    try {
-      result = await FilePicker.platform.pickFiles(type: FileType.image);
-      if (result == null) return;
-      setState(() {
-        _imageFile = result!.files.first;
-      });
-    } catch (e) {}
-  }
 
   Future<void> onSubmittCliked(BuildContext ctx) async {
     final name = nameController.text.trim();
     final emil = emailController.text.trim();
     final domain = domainController.text.trim();
     final number = numberController.text.trim();
-    if (result != null) {
+    if (webImage.value != null) {
       final student = StudentModel(
-        name: name,
-        email: emil,
-        domain: domain,
-        number: number,
-        image: Uint8List.fromList(_imageFile!.bytes!),
-      );
+          name: name,
+          email: emil,
+          domain: domain,
+          number: number,
+          image: webImage.value!);
       ScaffoldMessenger.of(ctx).showSnackBar(
         const SnackBar(
           content: Text('Student data updated successfully!'),
@@ -111,34 +115,24 @@ class _AddRecordAllState extends State<AddRecordAll> {
                     children: [
                       Stack(
                         children: [
-                          _imageFile != null
-                              ? ClipOval(
-                                  child: Image.memory(
-                                    Uint8List.fromList(_imageFile!.bytes!),
-                                    height: 100,
-                                    width: 100,
-                                    fit: BoxFit
-                                        .cover, // Ensures the image fits within the circular frame
-                                  ),
-                                )
-                              : Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        "assets/image/profile.jpg",
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                          ValueListenableBuilder(
+                            valueListenable: webImage,
+                            builder:
+                                (BuildContext context, value, Widget? child) {
+                              return CircleAvatar(
+                                  //It for display image from galary
+                                  radius: 60,
+                                  backgroundImage: value != null
+                                      ? MemoryImage(value)
+                                      : null);
+                            },
+                          ),
                           Positioned(
                             right: 0,
                             bottom: 0,
                             child: IconButton(
                               onPressed: () {
-                                pickImage();
+                                imagePickerFromGallery();
                               },
                               icon: const Icon(
                                 Icons.add,
@@ -304,28 +298,3 @@ class _AddRecordAllState extends State<AddRecordAll> {
     );
   }
 }
-
-// class AddRecordAll extends StatelessWidget {
-//   final String title;
-
-//   const AddRecordTabletDesk({super.key, required this.title});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-//       decoration: BoxDecoration(
-//         color: primaryColor,
-//         borderRadius: BorderRadius.circular(5),
-//       ),
-//       child: Text(
-//         title,
-//         style: TextStyle(
-//           fontSize: 18,
-//           fontWeight: FontWeight.w800,
-//           color: Colors.white,
-//         ),
-//       ),
-//     );
-//   }
-// }

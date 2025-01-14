@@ -20,7 +20,7 @@ class StudentModel extends HiveObject {
   final String number;
 
   @HiveField(5)
-  final Uint8List? image; // Store image as Uint8List.
+  final Uint8List image; // Store image as Uint8List.
 
   StudentModel({
     this.id,
@@ -28,6 +28,6 @@ class StudentModel extends HiveObject {
     required this.email,
     required this.domain,
     required this.number,
-    this.image,
+    required this.image,
   });
 }

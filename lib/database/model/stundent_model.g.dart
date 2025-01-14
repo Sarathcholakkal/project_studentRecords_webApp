@@ -22,7 +22,7 @@ class StudentModelAdapter extends TypeAdapter<StudentModel> {
       email: fields[2] as String,
       domain: fields[3] as String,
       number: fields[4] as String,
-      image: fields[5] as Uint8List?,
+      image: fields[5] as Uint8List,
     );
   }
 

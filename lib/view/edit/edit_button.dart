@@ -16,14 +16,11 @@ class EditButton extends StatelessWidget {
             bodyBuilder: (BuildContext context) =>
                 EditScreen(studentData: studentData),
             direction: PopoverDirection.right,
-            backgroundColor:
-                Colors.transparent, // Alpha value equivalent to 12% opacity
+            backgroundColor: Colors.transparent,
             width: 400.0,
             height: 600.0,
             arrowHeight: 10.0,
             arrowWidth: 10.0,
-            // Uncomment onPop if you need to handle pop actions
-            // onPop: () => print('Popover was popped!'),
           );
         },
         child: Icon(Icons.edit));

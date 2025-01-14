@@ -18,7 +18,7 @@ class _EditScreenState extends State<EditScreen> {
   late TextEditingController emailController;
   late TextEditingController domainController;
   late TextEditingController numberController;
-  // late String imagePath;
+  late Uint8List image;
   late int id;
 
   @override
@@ -27,7 +27,7 @@ class _EditScreenState extends State<EditScreen> {
     emailController = TextEditingController(text: widget.studentData.email);
     domainController = TextEditingController(text: widget.studentData.domain);
     numberController = TextEditingController(text: widget.studentData.number);
-    // imagePath = widget.studentData.image;
+    image = widget.studentData.image;
     id = widget.studentData.id!;
 
     super.initState();
@@ -60,7 +60,12 @@ class _EditScreenState extends State<EditScreen> {
     final number = numberController.text.trim();
 
     final student = StudentModel(
-        id: id, name: name, email: email, domain: domain, number: number);
+        id: id,
+        name: name,
+        email: email,
+        domain: domain,
+        number: number,
+        image: image);
     updateStudent(student);
     ScaffoldMessenger.of(ctx).showSnackBar(
       const SnackBar(
@@ -73,51 +78,11 @@ class _EditScreenState extends State<EditScreen> {
     Navigator.of(context).pop();
   }
 
-  // Future<void> onSubmittCliked(BuildContext ctx) async {
-  //   print('one submitte pressed');
-  //   final name = nameController.text.trim();
-  //   final emil = emailController.text.trim();
-  //   final domain = domainController.text.trim();
-  //   final number = numberController.text.trim();
-  //   if (result != null) {
-  //     final student = StudentModel(
-  //       name: name,
-  //       email: emil,
-  //       domain: domain,
-  //       number: number,
-  //       image: Uint8List.fromList(_imageFile!.bytes!),
-  //     );
-
-  //     await addStudent(student);
-  //     // Show success Snackbar
-
-  //     clearField();
-  //   } else {
-  //     showDialog(
-  //         context: ctx,
-  //         builder: (ctx1) {
-  //           return AlertDialog(
-  //             title: const Text('Please insert profile picture'),
-  //             actions: [
-  //               TextButton(
-  //                   onPressed: () {
-  //                     Navigator.of(ctx1).pop();
-  //                   },
-  //                   child: const Text('close'))
-  //             ],
-  //           );
-  //         });
-  //   }
-  // }
-
   clearField() {
     nameController.clear();
     emailController.clear();
     domainController.clear();
     numberController.clear();
-    setState(() {
-      // _imagePath = null;
-    });
   }
 
   @override
@@ -139,46 +104,6 @@ class _EditScreenState extends State<EditScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      // Stack(
-                      //   children: [
-                      //     _imageFile != null
-                      //         ? ClipOval(
-                      //             child: Image.memory(
-                      //               Uint8List.fromList(_imageFile!.bytes!),
-                      //               height: 100,
-                      //               width: 100,
-                      //               fit: BoxFit
-                      //                   .cover, // Ensures the image fits within the circular frame
-                      //             ),
-                      //           )
-                      //         : Container(
-                      //             width: 100,
-                      //             height: 100,
-                      //             decoration: BoxDecoration(
-                      //               borderRadius: BorderRadius.circular(50),
-                      //               image: DecorationImage(
-                      //                 image: AssetImage(
-                      //                   "assets/image/profile.jpg",
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //           ),
-                      //     Positioned(
-                      //       right: 0,
-                      //       bottom: 0,
-                      //       child: IconButton(
-                      //         onPressed: () {
-                      //           pickImage();
-                      //         },
-                      //         icon: const Icon(
-                      //           Icons.add,
-                      //           size: 50,
-                      //           color: Colors.red,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: TextFormField(
@@ -334,28 +259,3 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 }
-
-// class EditScreen extends StatelessWidget {
-//   final String title;
-
-//   const AddRecordTabletDesk({super.key, required this.title});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-//       decoration: BoxDecoration(
-//         color: primaryColor,
-//         borderRadius: BorderRadius.circular(5),
-//       ),
-//       child: Text(
-//         title,
-//         style: TextStyle(
-//           fontSize: 18,
-//           fontWeight: FontWeight.w800,
-//           color: Colors.white,
-//         ),
-//       ),
-//     );
-//   }
-// }

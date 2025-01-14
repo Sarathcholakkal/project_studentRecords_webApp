@@ -16,28 +16,30 @@ Future<void> addStudent(StudentModel student) async {
       name: student.name,
       email: student.email,
       domain: student.domain,
-      number: student.number);
-
-  // Put the updated song back into the database
+      number: student.number,
+      image: student.image);
   await studentDB.put(generatedKey, updatedStudent);
 
   getStudents();
 }
 
+//! getstudnet function-------------------------------------------------------
 Future<void> getStudents() async {
   final studentDB = await Hive.openBox<StudentModel>('studentBox');
   studentListNotifier.value.clear();
   studentListNotifier.value.addAll(studentDB.values);
   studentListNotifier.notifyListeners();
 }
-//
 
+//
+//!update student -----------------------------------------------------------
 Future<void> updateStudent(StudentModel student) async {
   final studentDB = await Hive.openBox<StudentModel>('studentBox');
   await studentDB.put(student.id, student);
   getStudents();
 }
 
+//! delete popup popup function-----------------------------------------------------
 Future<void> showDeleteConfirmation(BuildContext context, int id) async {
   final result = await showDialog<bool>(
     context: context,
@@ -65,12 +67,9 @@ Future<void> showDeleteConfirmation(BuildContext context, int id) async {
   }
 }
 
+//! delete database entry function
 Future<void> deleteStudent(int id) async {
   final studentDB = await Hive.openBox<StudentModel>('studentBox');
-
-  // Delete the record with the given key (ID)
   await studentDB.delete(id);
-
-  // Refresh the student list
   getStudents();
 }

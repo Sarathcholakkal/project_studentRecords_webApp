@@ -22,9 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       //! material app same for web / what is material app actaual purpose rather than give a design style
       debugShowCheckedModeBanner: false,
-      home:
-          //  LayoutTemplates()
-          SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }
