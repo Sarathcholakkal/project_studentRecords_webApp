@@ -46,7 +46,6 @@ class _RecordGridviewDeskState extends State<RecordGridviewDesk> {
                 );
               }
 
-              // If the filtered list is not empty, show the grid
               return GridView.builder(
                 itemCount: filteredList.length,
                 itemBuilder: (ctx, index) {

@@ -9,6 +9,7 @@
 // todo 9: change image from edit screen
 //todo 10: two branches for git hub
 //todo 11: comment  code
+//todo 12 : hosting version not pick image
 
 
 

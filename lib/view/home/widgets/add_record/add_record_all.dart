@@ -1,9 +1,8 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
-import 'package:file_picker/file_picker.dart';
 import 'package:student_records/database/db_functions/db_functions.dart';
 import 'package:student_records/database/model/stundent_model.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AddRecordAll extends StatefulWidget {
   const AddRecordAll({
@@ -18,15 +17,30 @@ class _AddRecordAllState extends State<AddRecordAll> {
   //==============image handling------------------------
   ValueNotifier<Uint8List?> webImage = ValueNotifier(null);
 
-  ImagePicker imagePicker = ImagePicker();
+  // ImagePicker imagePicker = ImagePicker();
 
-  Future<void> imagePickerFromGallery() async {
-    final imgPicked = await imagePicker.pickImage(source: ImageSource.gallery);
-    if (imgPicked != null) {
-      final Uint8List bytes = await imgPicked.readAsBytes();
-      setState(() {
-        webImage.value = bytes;
-      });
+  // Future<void> imagePickerFromGallery() async {
+  //   final imgPicked = await imagePicker.pickImage(source: ImageSource.gallery);
+  //   if (imgPicked != null) {
+  //     final Uint8List bytes = await imgPicked.readAsBytes();
+  //     setState(() {
+  //       webImage.value = bytes;
+  //     });
+  //   }
+  // }
+
+  PlatformFile? _imageFile;
+  Future<void> pickImage() async {
+    try {
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(type: FileType.image);
+      if (result == null) return;
+
+      _imageFile = result.files.first;
+      if (_imageFile != null)
+        webImage.value = Uint8List.fromList(_imageFile!.bytes!);
+    } catch (e) {
+      print("not print the value");
     }
   }
 
@@ -130,7 +144,8 @@ class _AddRecordAllState extends State<AddRecordAll> {
                             bottom: 0,
                             child: IconButton(
                               onPressed: () {
-                                imagePickerFromGallery();
+                                // imagePickerFromGallery();
+                                pickImage();
                               },
                               icon: const Icon(
                                 Icons.add,
