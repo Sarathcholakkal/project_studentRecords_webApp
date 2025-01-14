@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:student_records/database/model/stundent_model.dart';
 import 'package:student_records/services/locator/locator.dart';

@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:student_records/database/db_functions/db_functions.dart';
 import 'package:student_records/database/model/stundent_model.dart';
 import 'package:student_records/view/edit/edit_button.dart';
-import 'package:student_records/view/home/widgets/add_record/add_record_all.dart';
 import 'package:student_records/view/records/widget/info_row_widget.dart';
-import 'package:popover/popover.dart';
 
 class CardDeskWidget extends StatelessWidget {
   final StudentModel student;
@@ -15,9 +13,7 @@ class CardDeskWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (student.image != null) {
-      print("it's not nulllllllllllllll");
-    }
+    if (student.image != null) {}
     return Card(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

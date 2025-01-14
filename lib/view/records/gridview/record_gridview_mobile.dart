@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_records/database/db_functions/db_functions.dart';
 import 'package:student_records/database/model/stundent_model.dart';
+import 'package:student_records/view/records/search/search_record.dart';
 import 'package:student_records/view/records/widget/card_desk_widget.dart';
 
 class RecordGridviewMobile extends StatefulWidget {
@@ -16,22 +17,34 @@ class _RecordGridviewMobileState extends State<RecordGridviewMobile> {
     return SizedBox(
       height: 3000,
       width: double.infinity,
-      child: ValueListenableBuilder<List<StudentModel>>(
-        valueListenable: studentListNotifier,
-        builder: (BuildContext context, List<StudentModel> students, _) {
-          return GridView.builder(
-            itemCount: students.length,
-            itemBuilder: (ctx, index) {
-              final student = students[index];
-              return CardDeskWidget(student: student);
+      child: ValueListenableBuilder<String>(
+        valueListenable:
+            searchFilterNotifier, // Listen for search query changes
+        builder: (context, filter, _) {
+          return ValueListenableBuilder<List<StudentModel>>(
+            valueListenable: studentListNotifier,
+            builder: (BuildContext context, List<StudentModel> students, _) {
+              // Filter the student list based on the search query
+              List<StudentModel> filteredList = students
+                  .where((student) =>
+                      student.name.toLowerCase().contains(filter.toLowerCase()))
+                  .toList();
+
+              return GridView.builder(
+                itemCount: filteredList.length,
+                itemBuilder: (ctx, index) {
+                  final student = filteredList[index];
+                  return CardDeskWidget(student: student);
+                },
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 500,
+                  mainAxisSpacing: 50,
+                  crossAxisSpacing: 50,
+                  childAspectRatio: .8,
+                ),
+                padding: const EdgeInsets.all(5),
+              );
             },
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              mainAxisSpacing: 50,
-              crossAxisSpacing: 50,
-              childAspectRatio: .8,
-            ),
-            padding: const EdgeInsets.all(5),
           );
         },
       ),

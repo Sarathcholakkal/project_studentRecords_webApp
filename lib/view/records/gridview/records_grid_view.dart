@@ -11,7 +11,7 @@ class RecordsGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
       mobile: (BuildContext context) => RecordGridviewMobile(),
-      tablet: (BuildContext context) => RecordGridviewTablet(),
+      tablet: (BuildContext context) => RecordGridviewDesk(),
       desktop: (BuildContext context) => RecordGridviewDesk(),
     );
   }

@@ -1,51 +1,93 @@
-import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
+// import 'package:flutter/material.dart';
+// import 'package:responsive_builder/responsive_builder.dart';
 
-class SearchRecord extends StatelessWidget {
+// String? filter;
+
+// class SearchRecord extends StatefulWidget {
+//   const SearchRecord({super.key});
+
+//   @override
+//   State<SearchRecord> createState() => _SearchRecordState();
+// }
+
+// class _SearchRecordState extends State<SearchRecord> {
+//   final searchController = TextEditingController();
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     searchController.addListener(() {
+//       setState(() {
+//         filter = searchController.text;
+//       });
+//     });
+//     // TODO: implement initState
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       decoration: BoxDecoration(
+//         color: Colors.grey[200],
+//         borderRadius: BorderRadius.zero,
+//       ),
+//       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+//       padding: const EdgeInsets.symmetric(vertical: 5),
+//       child: TextFormField(
+//         keyboardType: TextInputType.text,
+//         controller: searchController,
+//         decoration: InputDecoration(
+//             hintText: 'search items here.....',
+//             hintStyle: TextStyle(color: Colors.grey[400]),
+//             contentPadding: const EdgeInsets.fromLTRB(40, 10, 10, 10),
+//             border: InputBorder.none),
+//       ),
+//     );
+//   }
+// }
+import 'package:flutter/material.dart';
+
+// Shared ValueNotifier for the search query
+ValueNotifier<String> searchFilterNotifier = ValueNotifier<String>("");
+
+class SearchRecord extends StatefulWidget {
   const SearchRecord({super.key});
 
   @override
+  State<SearchRecord> createState() => _SearchRecordState();
+}
+
+class _SearchRecordState extends State<SearchRecord> {
+  final searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      searchFilterNotifier.value =
+          searchController.text; // Update search filter
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(
-      builder: (context, sizingInformation) {
-        var textAlignment =
-            sizingInformation.deviceScreenType == DeviceScreenType.desktop
-                ? TextAlign.left
-                : TextAlign.center;
-        late double titleSize;
-        late double descriptionSize;
-        late SizedBox spaceBox;
-
-        if (sizingInformation.deviceScreenType == DeviceScreenType.mobile) {
-          titleSize = 50.0;
-          descriptionSize = 16.0;
-          spaceBox = SizedBox(
-            height: 40,
-          );
-        } else if (sizingInformation.deviceScreenType ==
-            DeviceScreenType.tablet) {
-          titleSize = 65.0;
-          descriptionSize = 18.0;
-          spaceBox = SizedBox(
-            height: 30,
-          );
-        } else {
-          // For desktop
-          titleSize = 80.0;
-          descriptionSize = 18.0;
-          spaceBox = SizedBox(
-            height: 10,
-          );
-        }
-
-        return Container(
-          width: 600,
-          height: 80,
-          color: Colors.green,
-          padding:
-              const EdgeInsets.all(16.0), // Added padding for better layout
-        );
-      },
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.zero,
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        controller: searchController,
+        decoration: InputDecoration(
+          hintText: 'Search items here...',
+          hintStyle: TextStyle(color: Colors.grey[400]),
+          contentPadding: const EdgeInsets.fromLTRB(40, 10, 10, 10),
+          border: InputBorder.none,
+        ),
+      ),
     );
   }
 }

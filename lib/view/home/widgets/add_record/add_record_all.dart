@@ -39,7 +39,6 @@ class _AddRecordAllState extends State<AddRecordAll> {
   }
 
   Future<void> onSubmittCliked(BuildContext ctx) async {
-    print('one submitte pressed');
     final name = nameController.text.trim();
     final emil = emailController.text.trim();
     final domain = domainController.text.trim();
