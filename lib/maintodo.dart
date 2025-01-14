@@ -1,5 +1,5 @@
 //todo 1: manage empty record
-//todo 2: search
+//todo 2: search  completed
 //todo 3: sort
 //todo 4: profile page
 // todo 5: animated record tile and new design

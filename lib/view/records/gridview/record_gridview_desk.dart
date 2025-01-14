@@ -30,6 +30,23 @@ class _RecordGridviewDeskState extends State<RecordGridviewDesk> {
                       student.name.toLowerCase().contains(filter.toLowerCase()))
                   .toList();
 
+              // Check if the filtered list is empty
+              if (filteredList.isEmpty) {
+                return Container(
+                  height: 1000,
+                  width: 1000,
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    'No records found.',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.red,
+                    ),
+                  ),
+                );
+              }
+
+              // If the filtered list is not empty, show the grid
               return GridView.builder(
                 itemCount: filteredList.length,
                 itemBuilder: (ctx, index) {
