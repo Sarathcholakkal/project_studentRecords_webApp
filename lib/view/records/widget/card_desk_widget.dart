@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:student_records/database/db_functions/db_functions.dart';
 import 'package:student_records/database/model/stundent_model.dart';
 import 'package:student_records/view/edit/edit_button.dart';
 import 'package:student_records/view/home/widgets/add_record/add_record_all.dart';
@@ -110,9 +111,16 @@ class CardDeskWidget extends StatelessWidget {
                     Radius.circular(8),
                   ),
                 ),
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.red,
+                child: GestureDetector(
+                  onTap: () {
+                    if (student.id != null) {
+                      showDeleteConfirmation(context, student.id!);
+                    }
+                  },
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
                 ),
               ),
             ],

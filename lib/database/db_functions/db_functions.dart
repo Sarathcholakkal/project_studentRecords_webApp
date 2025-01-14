@@ -37,3 +37,40 @@ Future<void> updateStudent(StudentModel student) async {
   await studentDB.put(student.id, student);
   getStudents();
 }
+
+Future<void> showDeleteConfirmation(BuildContext context, int id) async {
+  final result = await showDialog<bool>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: const Text('Confirm Deletion'),
+      content: const Text('Are you sure you want to delete this student?'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(ctx).pop(false),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(ctx).pop(true),
+          child: const Text('Delete'),
+        ),
+      ],
+    ),
+  );
+
+  if (result == true) {
+    await deleteStudent(id);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Student deleted successfully')),
+    );
+  }
+}
+
+Future<void> deleteStudent(int id) async {
+  final studentDB = await Hive.openBox<StudentModel>('studentBox');
+
+  // Delete the record with the given key (ID)
+  await studentDB.delete(id);
+
+  // Refresh the student list
+  getStudents();
+}
