@@ -31,3 +31,9 @@ Future<void> getStudents() async {
   studentListNotifier.notifyListeners();
 }
 //
+
+Future<void> updateStudent(StudentModel student) async {
+  final studentDB = await Hive.openBox<StudentModel>('studentBox');
+  await studentDB.put(student.id, student);
+  getStudents();
+}

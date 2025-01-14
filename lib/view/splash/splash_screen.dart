@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:student_records/database/db_functions/db_functions.dart';
 import 'package:student_records/view/widget/layout_templates/layout_templates.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> initDatabase() async {
     await Future.delayed(Duration(seconds: 2));
+    await getStudents();
 
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(

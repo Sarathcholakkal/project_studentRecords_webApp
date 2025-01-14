@@ -1,6 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:student_records/database/model/stundent_model.dart';
+import 'package:student_records/view/edit/edit_button.dart';
+import 'package:student_records/view/home/widgets/add_record/add_record_all.dart';
 import 'package:student_records/view/records/widget/info_row_widget.dart';
+import 'package:popover/popover.dart';
 
 class CardDeskWidget extends StatelessWidget {
   final StudentModel student;
@@ -9,15 +14,36 @@ class CardDeskWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (student.image != null) {
+      print("it's not nulllllllllllllll");
+    }
     return Card(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 80,
-            backgroundImage: AssetImage("assets/image/profile.jpg"),
-          ),
+          student.image != null
+              ? ClipOval(
+                  child: Image.memory(
+                    Uint8List.fromList(student.image!),
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit
+                        .cover, // Ensures the image fits within the circular frame
+                  ),
+                )
+              : Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    image: DecorationImage(
+                      image: AssetImage(
+                        "assets/image/profile.jpg",
+                      ),
+                    ),
+                  ),
+                ),
           SizedBox(
             height: 30,
           ),
@@ -70,10 +96,7 @@ class CardDeskWidget extends StatelessWidget {
                     Radius.circular(8),
                   ),
                 ),
-                child: Icon(
-                  Icons.edit,
-                  color: Colors.blue,
-                ),
+                child: SizedBox(child: EditButton(studentData: student)),
               ),
               Container(
                 width: 40,
